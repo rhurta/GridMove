@@ -1,3 +1,5 @@
+28.04.2020 - Add Support for Virtual Desktop Grids.
+------------------------
 15.09.2016 - Fix WinMove for Windows 10.
 ------------------------
 
