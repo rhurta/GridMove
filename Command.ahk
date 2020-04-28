@@ -4,7 +4,7 @@
 ;function: Adjusts windows to a predefined or user-defined desktop grid.
 
 Command:
-  
+  GoSub, VirtualDesktopGrid
   GoSub, ShowGroups
 
 Drop_Command:
@@ -323,11 +323,13 @@ DefineHotkeys:
   return 
 
 WinHotkeys:
+  GoSub, VirtualDesktopGrid
   StringRight,Number,A_ThisHotkey,1
   MoveToGrid(Number)
   return
   
 WinHotkeysMeta:
+  GoSub, VirtualDesktopGrid
   GoSub, ShowGroups
 
   Settimer,Drop_Command,off

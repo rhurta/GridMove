@@ -23,7 +23,7 @@ ReadIni:
     IniRead,isFirstRun            ,%ScriptDir%,IniSettings,IniVersion,false
     
 
-  IniVersion=15
+  IniVersion=16
   IfExist,%ScriptDir%
   {
     IniRead,IniVersion            ,%ScriptDir%,IniSettings,IniVersion,1
@@ -121,6 +121,10 @@ ReadIni:
       IniVersion = 15
       IniWrite,%IniVersion%      ,%ScriptDir%, IniSettings,Iniversion
     }
+    if IniVersion = 15
+    {
+      IniWrite,%VDGrid%          ,%ScriptDir%,GridSettings,VDGrid
+    }
 
     IniRead,GridName         ,%ScriptDir%,GridSettings     ,GridName,Error
     IniRead,LButtonDrag      ,%ScriptDir%,InterfaceSettings,LButtonDrag,Error
@@ -149,6 +153,7 @@ ReadIni:
     IniRead,Registered       ,%ScriptDir%,OtherSettings    ,Registered,Error
     IniRead,NoTrayIcon       ,%ScriptDir%,InterfaceSettings,NoTrayIcon,Error
     IniRead,FirstRun         ,%ScriptDir%,IniSettings      ,FirstRun,Error
+    IniRead,VDGrid           ,%ScriptDir%,GridSettings      ,VDGrid,Error
 
     If(Registered = "Error")
       Registered =
@@ -161,7 +166,7 @@ ReadIni:
         OR FastMoveMeta   = "Error" OR TitleLeft      = "Error" OR MButtonTimeout    = "Error" 
         OR Transparency   = "Error" OR Exceptions     = "Error" OR SafeMode          = "Error"
         OR SequentialMove = "Error" OR DebugMode      = "Error" OR NoTrayIcon        = "Error"
-        OR FirstRun       = "ERROR"
+        OR FirstRun       = "ERROR" OR VDGrid         = "Error"
         OR DisableTitleButtonsDetection = "Error")
     {
       MsgBox,%error_inifile%
@@ -204,7 +209,7 @@ WriteIni:
       }
     FileAppend, ,%ScriptDir%
   }
-  IniWrite,%GridName%         ,%ScriptDir%,GridSettings     ,GridName
+  IniWrite,%GridName%         ,%ScriptDir%,GridSettings     ,DefaultGridName
   IniWrite,%LButtonDrag%      ,%ScriptDir%,InterfaceSettings,LButtonDrag
   IniWrite,%MButtonDrag%      ,%ScriptDir%,InterfaceSettings,MButtonDrag
   IniWrite,%EdgeDrag%         ,%ScriptDir%,InterfaceSettings,EdgeDrag
@@ -231,6 +236,8 @@ WriteIni:
   IniWrite,%Language%         ,%ScriptDir%,OtherSettings    ,Language
   IniWrite,%NoTrayIcon%       ,%ScriptDir%,InterfaceSettings,NoTrayIcon
   IniWrite,%FirstRun%         ,%ScriptDir%,IniSettings      ,FirstRun
+  IniWrite,%VDGrid%           ,%ScriptDir%,GridSettings      ,VDGrid
+  
 Return   
    
 ;***************************************************************About / help GUI

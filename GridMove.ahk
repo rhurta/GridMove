@@ -12,6 +12,7 @@
   ShowNumbersFlag := True ;configures the showing or not of the numbers
   TitleSize := 100
   GridName = Grids/3 Part.grid
+  DefaultGridName := GridName
   GridOrder = 2 Part Vertical,3 Part,EdgeGrid,Dual Screen
   UseCommand := True
   CommandHotkey = #g
@@ -31,39 +32,18 @@
   Language=EN
   NoTrayIcon:=False
   FirstRun:=True
-
+  VDGrid = 2 Part Vertical,3 Part,EdgeGrid
+  
   ;Registered=quebec
 
   ;;end of options
 
-  ScriptVersion = 1.19.72-win10fix
-
-  ; Detect Windows 10
-  if % substr(a_osversion, 1, 2) = 10
-    Windows10:=True
-
-  ; Hack WinMove for Windows 10
-  WinSnap(WinTitle, X := "", Y := "", W := "", H := "") {
-   If ((X . Y . W . H) = "") ;
-      Return False
-   WinGet, hWnd, ID, %WinTitle% ; taken from Coco's version
-   If !(hWnd)
-      Return False
-   DL := DT := DR := DB := 0
-   VarSetCapacity(RC, 16, 0)
-   DllCall("GetWindowRect", "Ptr", hWnd, "Ptr", &RC)
-   WL := NumGet(RC, 0, "Int"), WT := NumGet(RC, 4, "Int"), WR := NumGet(RC, 8, "Int"), WB := NumGet(RC, 12, "Int")
-   If (DllCall("Dwmapi.dll\DwmGetWindowAttribute", "Ptr", hWnd, "UInt", 9, "Ptr", &RC, "UInt", 16) = 0) { ; S_OK = 0
-      FL := NumGet(RC, 0, "Int"), FT := NumGet(RC, 4, "Int"), FR := NumGet(RC, 8, "Int"), FB := NumGet(RC, 12, "Int")
-      DL := WL - FL, DT := WT - FT, DR := WR - FR, DB := WB - FB
-   }
-   X := X <> "" ? X + DL : WL, Y := Y <> "" ? Y + DT : WT
-   W := W <> "" ? W - DL + DR : WR - WL, H := H <> "" ? H - DT + DB: WB - WT
-   Return DllCall("MoveWindow", "Ptr", hWnd, "Int", X, "Int", Y, "Int", W, "Int", H, "UInt", 1)
-  }
+  ScriptVersion = 1.19.72-win10fix-VirtualDesktopGrid
 
   MutexExists("GridMove_XB032")
 
+  ; Different Grids for each Virtual Desktop
+  global hVirtualDesktopAccessor := DllCall("LoadLibrary", "Str", A_ScriptDir . "\other\virtual-desktop-accessor.dll", "Ptr")
 
   Sysget, CaptionSize,4  ;get the size of the caption
   Sysget, BorderSize, 46 ;get the size of the border
@@ -84,9 +64,9 @@
   OSDcreate()
   GoSub,setlanguage
   GoSub, ReadIni
+  DefaultGridName := GridName
 
   AeroEnabled := loadAero()
-  GoSub,setlanguage
 
   SetWinDelay, 0
   SetBatchLines, -1
@@ -261,6 +241,7 @@ createOptionsMenu()
   Menu,options_menu, add, %tray_edgetime%, Options_EdgeTime
   Menu,options_menu, add, %tray_titlesize%, Options_TitleSize
   Menu,options_menu, add, %tray_gridorder%, Options_GridOrder
+  Menu,options_menu, add, %tray_vdgrid%, Options_VDGrid
   If LButtonDrag
     Menu,options_menu,check, %tray_lbuttondrag%
   else
@@ -448,6 +429,7 @@ return
 ;*******************Mbutton method
 
 MButtonMove:
+  GoSub, VirtualDesktopGrid
   CoordMode,Mouse,Screen
   MouseGetPos, OldMouseX, OldMouseY, Window,
   WinGetTitle,WinTitle,ahk_id %Window%
@@ -675,10 +657,7 @@ SnapWindow:
       if ShouldUseSizeMoveMessage(WinClass)
         SendMessage WM_ENTERSIZEMOVE, , , ,ahk_id %windowid%
 
-      if Windows10
         WinSnap("ahk_id" windowid, GridLeft,GridTop, GridWidth, GridHeight)
-      else
-        WinMove, ahk_id %windowid%, ,%GridLeft%,%GridTop%,%GridWidth%,%GridHeight%,
 
       if ShouldUseSizeMoveMessage(WinClass)
         SendMessage WM_EXITSIZEMOVE, , , ,ahk_id %windowid%
@@ -1028,12 +1007,19 @@ Hotkeys_FastMoveModifiers:
   Reload
   return
 
-
 Options_GridOrder:
   inputbox,input, %input_gridorder_title%,%input_gridorder%,,,,,,,,%GridOrder%
   if errorlevel <> 0
     return
   GridOrder := input
+  GoSub, WriteIni
+return
+
+Options_VDGrid:
+  inputbox,input, %input_vdgrid_title%,%input_vdgrid%,,,,,,,,%VDGrid%
+  if errorlevel <> 0
+    return
+  VDGrid := input
   GoSub, WriteIni
 return
   
@@ -1141,6 +1127,7 @@ return
 
 Template-Grids:
   GridName = Grids/%A_ThisMenuItem%.grid
+  DefaultGridName := GridName
   GoSub, ApplyGrid
   Menu,templates_menu,DeleteAll
   createTemplatesMenu()
@@ -1594,6 +1581,60 @@ AddCurrentToIgnoreCancel:
   Ignore_added := true
 return
 
+VirtualDesktopGrid:
+  CurrentDesktop := GetCurrentDesktopNumber()
+  thisGrid = none
+  Loop
+  {
+    StringLeft,out,VDGrid,1
+    If out = ,
+      StringTrimLeft,VDGrid,VDGrid,1
+    else
+      {
+      StringRight,out,VDGrid,1
+      If out <> ,
+        VDGrid =%VDGrid%,
+      break
+      }
+  }
+  Loop, Parse,VDGrid,CSV 
+  {
+    If A_LoopField is space
+      continue
+	If (A_Index = CurrentDesktop)
+    {
+	  thisGrid := A_LoopField
+	  break
+    }
+  }  
+  
+  if (thisGrid = "none"){
+    GridName := DefaultGridName
+  }
+  else{
+    GridName = Grids/%thisGrid%.grid
+  }
+  Critical,on
+  ;~ GoSub,HideGroups
+  ;~ Gui,2:Hide
+  GoSub, ApplyGrid
+  ;~ GoSub, ShowGroups
+  ;~ SafeShow := False
+  Critical,off
+return
+
+GetCurrentDesktopNumber(){
+	GetCurrentDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "GetCurrentDesktopNumber", "Ptr")
+	currentDesktop := DllCall(GetCurrentDesktopNumberProc) + 1
+	return currentDesktop
+}
+
+GetNumberOfDesktops() {
+	GetDesktopCountProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "GetDesktopCount", "Ptr")
+    numberOfDesktop := DllCall(GetDesktopCountProc)
+	return numberOfDesktop
+}
+
 loadAero()
 {
   If(A_OSVersion!="WIN_VISTA" && A_OSVersion!="WIN_7")
@@ -1610,7 +1651,8 @@ loadAero()
 
   return true
 }
-  
+
+#Include .\other\WinSnap.ahk        ; Hack WinMove for Windows 10
 #include files.ahk
 #include command.ahk
 #include calc.ahk
