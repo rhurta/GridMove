@@ -32,6 +32,7 @@ setlanguage:
     tray_color_orange=Orange
     tray_color_blue=Bleu
     tray_color_black=Noir
+    tray_color_white=Blanc
 
     error_ngroups=Une erreur s'est produite lors de l'ouverture du fichier grid.`nLa configuration par défaut sera restaurée. Veuillez sélectionner une autre grille du menu modèles.`nErrorCode:001
 
@@ -104,6 +105,7 @@ setlanguage:
     tray_color_orange=Orange
     tray_color_blue=Blue
     tray_color_black=Black
+    tray_color_white=White
 
     error_ngroups=There was an error while opening the grid file.`nReverting to Default Config. Please select another grid from the templates menu.`nErrorCode:001
     error_grid_p1=There was an error while reading the grid file.`nReverting to Default config. 

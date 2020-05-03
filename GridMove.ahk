@@ -21,7 +21,7 @@
   Exceptions = QuarkXPress,Winamp v1.x,Winamp PE,Winamp Gen,Winamp EQ,Shell_TrayWnd,32768,Progman,DV2ControlHost
   MButtonExceptions = inkscape.exe 
   MButtonTimeout = 0.3
-  Transparency = 200
+  Transparency = 100
   SafeMode := True
   FastMoveMeta =
   SequentialMove := False
@@ -32,7 +32,8 @@
   Language=EN
   NoTrayIcon:=False
   FirstRun:=True
-  VDGrid = 2 Part Vertical,3 Part,EdgeGrid
+  VDGrid = ultrawide3,2HPart+2VNarrow,ultrawide
+  Spacing = 10
   
   ;Registered=quebec
 
@@ -265,11 +266,13 @@ createColorsMenu()
   global tray_color_orange
   global tray_color_blue
   global tray_color_black
+  global tray_color_white
   global colortheme
 
   Menu,colors_menu, add, %tray_color_orange%, setColorTheme
   Menu,colors_menu, add, %tray_color_blue%, setColorTheme
   Menu,colors_menu, add, %tray_color_black%, setColorTheme
+  Menu,colors_menu, add, %tray_color_white%, setColorTheme
 
   if(colortheme="orange")
     Menu,colors_menu,check, %tray_color_orange%
@@ -277,6 +280,8 @@ createColorsMenu()
     Menu,colors_menu,check, %tray_color_blue%
   if(colortheme="black")
     Menu,colors_menu,check, %tray_color_black%
+  if(colortheme="white")
+    Menu,colors_menu,check, %tray_color_white%
 }
 
 setColorTheme:
@@ -286,6 +291,8 @@ setColorTheme:
     colorTheme=blue
   if(A_ThisMenuItem=tray_color_black)
     colorTheme=black
+  if(A_ThisMenuItem=tray_color_white)
+    colorTheme=white
 
   gosub, writeini
   reload
@@ -781,7 +788,7 @@ setGuiColors()
   global verticalGrid
   if(colortheme="blue")
   {
-    Gui, Font, s15 cBlue, Tahoma
+    Gui, Font, s15 cBlue q5, Tahoma
     shadowcolor=555555
     textcolor=0000FF
     guicolor=0000EF
@@ -789,14 +796,22 @@ setGuiColors()
     verticalGrid=Gridv_blue.bmp
   }else if(colortheme="black")
   {
-    Gui, Font, s15 cBlack, Tahoma
+    Gui, Font, s15 cBlack q5, Tahoma
     shadowcolor=333333
     textcolor=000000
     guicolor=333333
     horizontalGrid=Gridh_black.bmp
     verticalGrid=Gridv_black.bmp
+  }else if(colortheme="white")
+  {
+    Gui, Font, s15 cEEEEEE q5, Verdana
+    shadowcolor=000000
+    textcolor=EEEEEE
+    guicolor=333333
+    horizontalGrid=Gridh_white.bmp
+    verticalGrid=Gridv_white.bmp
   }else{
-    Gui, Font, s15 cRed, Tahoma
+    Gui, Font, s15 cRed q5, Tahoma
     shadowcolor=000000
     textcolor=FFD300
     guicolor=EEAA99
@@ -810,6 +825,11 @@ creategroups:
   setGuiColors()
   loop,%NGroups%
   {
+    gap = 3
+    if(colortheme="white"){
+        gap := Spacing
+    }
+        
     TriggerTop    := %A_Index%TriggerTop - ScreenTop
     TriggerBottom := %A_Index%TriggerBottom - ScreenTop
     TriggerLeft   := %A_Index%TriggerLeft - ScreenLeft
@@ -830,72 +850,76 @@ creategroups:
     tempRight := triggerRight - 1
     tempHeight := tempBottom - tempTop +2
     tempWidth  := tempRight - tempLeft +2
-    Gui, add, Picture, Y%tempTop%    X%tempLeft% W%tempWidth% H3 ,%A_ScriptDir%\Images\%horizontalGrid%
-    Gui, add, Picture, Y%tempBottom% X%tempLeft% W%tempWidth% H3 ,%A_ScriptDir%\Images\%horizontalGrid%
-    Gui, add, Picture, Y%tempTop% X%tempLeft%  W3 H%tempHeight% ,%A_ScriptDir%\Images\%verticalGrid%
-    Gui, add, Picture, Y%tempTop% X%tempRight% W3 H%tempHeight% ,%A_ScriptDir%\Images\%verticalGrid%
     
-    shadowleft := textleft + 1
-    shadowtop := texttop + 1
+    Gui, add, Picture, Y%tempTop%    X%tempLeft%  W%tempWidth% H%gap%  ,%A_ScriptDir%\Images\%horizontalGrid%
+    Gui, add, Picture, Y%tempBottom% X%tempLeft%  W%tempWidth% H%gap%  ,%A_ScriptDir%\Images\%horizontalGrid%
+    Gui, add, Picture, Y%tempTop%    X%tempLeft%  W%gap% H%tempHeight% ,%A_ScriptDir%\Images\%verticalGrid%
+    Gui, add, Picture, Y%tempTop%    X%tempRight% W%gap% H%tempHeight% ,%A_ScriptDir%\Images\%verticalGrid%
     
-    If ShowNumbersFlag
+    minsize = 20
+    midsize = 100
+    fontWtoHratio = 0.75
+    pixelToPoints = 0.73
+    TooSmallFlag = 0
+    if(colortheme="white") {
+        if(TriggerHeight>=minsize and TriggerHeight<midsize and TriggerWidth>=minsize*fontWtoHratio) {
+            if(A_Index<10 or TriggerWidth>=minsize*fontWtoHratio*2)
+                fs := Round(TriggerHeight*pixelToPoints*0.75)
+            Else
+                fs := Round(TriggerHeight*pixelToPoints*0.75/2)
+            Gui, Font, s%fs% q5, Arial
+        } else if(TriggerHeight>=midsize and TriggerWidth>minsize*fontWtoHratio) {
+            if(A_Index<10 or TriggerWidth>=minsize*fontWtoHratio*2)
+                fs := Round(midsize*pixelToPoints*0.75)
+            Else
+                fs := Round(midsize*pixelToPoints*0.75/2)
+            Gui, Font, s%fs% q5, Arial
+        } else {
+            TooSmallFlag = 1
+        }
+    }
+    
+    shadowleft := -2
+    shadowtop := -2
+    
+    If ShowNumbersFlag and !TooSmallFlag
       If GridTop is number
         If GridLeft is number
-          If A_Index < 10 
-          {
-            Gui, add, text, BackGroundTrans c%shadowcolor% X%ShadowLeft% Y%ShadowTop% ,%A_Index%
-            Gui, add, text, BackGroundTrans c%textcolor% X%TextLeft% Y%TextTop% ,%A_Index%
-          }
-          else
-          {
-            Gui, add, text,% "X" ShadowLeft - 6 " Y" ShadowTop "c"shadowcolor  "BackGroundTrans" ,%A_Index%
-            Gui, add, text,% "X" TextLeft - 6 " Y" TextTop "c"textcolor "BackGroundTrans" ,%A_Index%
-          }
+            ShadowText(TriggerLeft, TriggerTop, TriggerWidth, TriggerHeight, shadowleft, shadowtop, shadowcolor, textcolor, A_Index)
 
 
-    RestoreLeftShadow := RestoreLeft + 1
-    RestoreUndo := RestoreLeft + 20
-    RestoreUndoShadow := RestoreUndo + 1
-
-    If ShowNumbersFlag
+    If ShowNumbersFlag and !TooSmallFlag
     {
       If (GridTop = "WindowHeight" OR GridLeft = "WindowWidth")
       {
-        Gui, add, text,c%shadowcolor% BackGroundTrans  X%ShadowLeft% Y%ShadowTop% ,%A_Index%
-        Gui, add, text,c%textcolor% BackGroundTrans  X%TextLeft% Y%TextTop% ,%A_Index%
+        ShadowText(TriggerLeft, TriggerTop, TriggerWidth, TriggerHeight, shadowleft, shadowtop, shadowcolor, textcolor, A_Index)
       }
       If Gridtop = Restore
       {
-        Gui, add, text,c%shadowcolor% BackGroundTrans  X%RestoreUndoShadow% Y%ShadowTop% ,%A_Index%-Undo
-        Gui, add, text,c%textcolor% BackGroundTrans  X%RestoreUndo% Y%TextTop% ,%A_Index%-Undo
+        ShadowText(TriggerLeft, TriggerTop, TriggerWidth, TriggerHeight, shadowleft, shadowtop, shadowcolor, textcolor, A_Index . "-Restore")
       }
       If GridTop = Maximize 
       {
-        Gui, add, text,c%shadowcolor% BackGroundTrans  X%RestoreLeftShadow% Y%ShadowTop% ,%A_Index%-Maximize
-        Gui, add, text,c%textcolor% BackGroundTrans  X%RestoreLeft% Y%TextTop% ,%A_Index%-Maximize
+        ShadowText(TriggerLeft, TriggerTop, TriggerWidth, TriggerHeight, shadowleft, shadowtop, shadowcolor, textcolor, A_Index . "-Maximize")
       }
       If GridTop = AlwaysOnTop
       {
-        Gui, add, text,c%shadowcolor% BackGroundTrans  X%RestoreLeftShadow% Y%ShadowTop% ,%A_Index%-On Top
-        Gui, add, text,c%textcolor% BackGroundTrans  X%RestoreLeft% Y%TextTop% ,%A_Index%-On Top
+        ShadowText(TriggerLeft, TriggerTop, TriggerWidth, TriggerHeight, shadowleft, shadowtop, shadowcolor, textcolor, A_Index . "-On Top")
       }
     }
-    else
+    else if !TooSmallFlag
     {
       If Gridtop = Restore
       {
-        Gui, add, text,c%shadowcolor% BackGroundTrans  X%RestoreUndoShadow% Y%ShadowTop% ,Undo
-        Gui, add, text,c%textcolor% BackGroundTrans  X%RestoreUndo% Y%TextTop% ,Undo
+        ShadowText(TriggerLeft, TriggerTop, TriggerWidth, TriggerHeight, shadowleft, shadowtop, shadowcolor, textcolor, "Restore")
       }
       If GridTop = Maximize 
       {
-        Gui, add, text,c%shadowcolor% BackGroundTrans  X%RestoreLeftShadow% Y%ShadowTop% ,Maximize
-        Gui, add, text,c%textcolor% BackGroundTrans  X%RestoreLeft% Y%TextTop% ,Maximize
+        ShadowText(TriggerLeft, TriggerTop, TriggerWidth, TriggerHeight, shadowleft, shadowtop, shadowcolor, textcolor, "Maximize")
       }
       If GridTop = AlwaysOnTop
       {
-        Gui, add, text,c%shadowcolor% BackGroundTrans  X%RestoreLeftShadow% Y%ShadowTop% ,On Top
-        Gui, add, text,c%textcolor% BackGroundTrans  X%RestoreLeft% Y%TextTop% ,On Top
+        ShadowText(TriggerLeft, TriggerTop, TriggerWidth, TriggerHeight, shadowleft, shadowtop, shadowcolor, textcolor, "On Top")
       }
     }
 
@@ -908,41 +932,46 @@ creategroups:
       {
         If (%A_Index%GridBottom != "")
         {
-          Gui, add, text,c%shadowcolor% BackGroundTrans  X%RestoreLeftShadow% Y%ShadowTop% ,%A_Index%-%GridBottom%
-          Gui, add, text,c%textcolor% BackGroundTrans  X%RestoreLeft% Y%TextTop% ,%A_Index%-%GridBottom%
+          ShadowText(TriggerLeft, TriggerTop, TriggerWidth, TriggerHeight, shadowleft, shadowtop, shadowcolor, textcolor, A_Index . "-" . GridBottom)
         }
         else
         {
-          Gui, add, text,c%shadowcolor% BackGroundTrans  X%RestoreLeftShadow% Y%ShadowTop% ,%A_Index%-%GridLeft%
-          Gui, add, text,c%textcolor% BackGroundTrans  X%RestoreLeft% Y%TextTop% ,%A_Index%-%GridLeft%
+          ShadowText(TriggerLeft, TriggerTop, TriggerWidth, TriggerHeight, shadowleft, shadowtop, shadowcolor, textcolor, A_Index . "-" . GridLeft)
         }
       }else
       {
         If (%A_Index%GridBottom != "")
         {
-          Gui, add, text,c%shadowcolor% BackGroundTrans  X%RestoreLeftShadow% Y%ShadowTop% ,%GridBottom%
-          Gui, add, text,c%textcolor% BackGroundTrans  X%RestoreLeft% Y%TextTop% ,%GridBottom%
+          ShadowText(TriggerLeft, TriggerTop, TriggerWidth, TriggerHeight, shadowleft, shadowtop, shadowcolor, textcolor, A_Index . "-" . GridBottom)
         }
         else
         {
-          Gui, add, text,c%shadowcolor% BackGroundTrans  X%RestoreLeftShadow% Y%ShadowTop% ,%GridLeft%
-          Gui, add, text,c%textcolor% BackGroundTrans  X%RestoreLeft% Y%TextTop% ,%GridLeft%
+          ShadowText(TriggerLeft, TriggerTop, TriggerWidth, TriggerHeight, shadowleft, shadowtop, shadowcolor, textcolor, A_Index . "-" . GridLeft)
         }
       }
     }
   }
+  
   Gui, +AlwaysOnTop +ToolWindow -Caption +LastFound +E0x20
   Gui, Color, %guicolor%
   Gui, Margin,0,0
 
   Gui,show,x0 y0 w0 h0 noactivate,GridMove Drop Zone 0xba
   WinGet,GuiId,Id,GridMove Drop Zone 0xba
-  WinSet, TransColor, %guicolor%, ahk_id %GuiId%
-
+  
+  if(colortheme="white")
+    WinSet, Transparent, %Transparency%,
+    ;WinSet, TransColor, FFFFFF %Transparency%, ahk_id %GuiId%
+  Else
+    WinSet, TransColor, %guicolor%, ahk_id %GuiId%
+    
+    
   Gui,2: +lastfound
   gui2hwnd:=WinExist() ;handle.
   if(!AeroEnabled)
   {
+    AccentColor := SystemAccentColor()
+    Gui,2: Color, %AccentColor%
     WinSet, Transparent, %Transparency%,
     Gui,2: +ToolWindow +AlwaysOnTop -Disabled -SysMenu -Caption
     Gui,2: Margin,0,0
@@ -1615,11 +1644,7 @@ VirtualDesktopGrid:
     GridName = Grids/%thisGrid%.grid
   }
   Critical,on
-  ;~ GoSub,HideGroups
-  ;~ Gui,2:Hide
   GoSub, ApplyGrid
-  ;~ GoSub, ShowGroups
-  ;~ SafeShow := False
   Critical,off
 return
 
@@ -1652,6 +1677,8 @@ loadAero()
   return true
 }
 
+#Include .\other\SystemAccentColor.ahk     ;
+#Include .\other\ShadowText.ahk     ;
 #Include .\other\WinSnap.ahk        ; Hack WinMove for Windows 10
 #include files.ahk
 #include command.ahk

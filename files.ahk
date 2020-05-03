@@ -124,6 +124,9 @@ ReadIni:
     if IniVersion = 15
     {
       IniWrite,%VDGrid%          ,%ScriptDir%,GridSettings,VDGrid
+      IniWrite,%Spacing%         ,%ScriptDir%,OtherSettings,Spacing
+      IniVersion = 16
+      IniWrite,%IniVersion%      ,%ScriptDir%, IniSettings,Iniversion
     }
 
     IniRead,GridName         ,%ScriptDir%,GridSettings     ,GridName,Error
@@ -154,6 +157,7 @@ ReadIni:
     IniRead,NoTrayIcon       ,%ScriptDir%,InterfaceSettings,NoTrayIcon,Error
     IniRead,FirstRun         ,%ScriptDir%,IniSettings      ,FirstRun,Error
     IniRead,VDGrid           ,%ScriptDir%,GridSettings      ,VDGrid,Error
+    IniRead,Spacing          ,%ScriptDir%,OtherSettings     ,Spacing,Error
 
     If(Registered = "Error")
       Registered =
@@ -166,7 +170,7 @@ ReadIni:
         OR FastMoveMeta   = "Error" OR TitleLeft      = "Error" OR MButtonTimeout    = "Error" 
         OR Transparency   = "Error" OR Exceptions     = "Error" OR SafeMode          = "Error"
         OR SequentialMove = "Error" OR DebugMode      = "Error" OR NoTrayIcon        = "Error"
-        OR FirstRun       = "ERROR" OR VDGrid         = "Error"
+        OR FirstRun       = "ERROR" OR VDGrid         = "Error" OR Spacing           = "Error"
         OR DisableTitleButtonsDetection = "Error")
     {
       MsgBox,%error_inifile%
@@ -209,7 +213,7 @@ WriteIni:
       }
     FileAppend, ,%ScriptDir%
   }
-  IniWrite,%GridName%         ,%ScriptDir%,GridSettings     ,DefaultGridName
+  IniWrite,%GridName%         ,%ScriptDir%,GridSettings     ,GridName
   IniWrite,%LButtonDrag%      ,%ScriptDir%,InterfaceSettings,LButtonDrag
   IniWrite,%MButtonDrag%      ,%ScriptDir%,InterfaceSettings,MButtonDrag
   IniWrite,%EdgeDrag%         ,%ScriptDir%,InterfaceSettings,EdgeDrag
@@ -237,6 +241,7 @@ WriteIni:
   IniWrite,%NoTrayIcon%       ,%ScriptDir%,InterfaceSettings,NoTrayIcon
   IniWrite,%FirstRun%         ,%ScriptDir%,IniSettings      ,FirstRun
   IniWrite,%VDGrid%           ,%ScriptDir%,GridSettings      ,VDGrid
+  IniWrite,%Spacing%          ,%ScriptDir%,OtherSettings     ,Spacing
   
 Return   
    

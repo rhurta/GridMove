@@ -102,7 +102,7 @@ the "last size" is a special element. It's used to make the window
 be moved to the size it had before being moved by gridmove. This is 
 specially useful if you snapped a window inadvertedly and wanted to 
 get back to the previous state.
-
+5
   3.3 - Cicling Through Grids
   Most probably, you'd like to use parts of 2 or more grids. You can
 acomplish this in 2 ways: either by creating your own grid (see
