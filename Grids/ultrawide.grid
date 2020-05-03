@@ -1,0 +1,193 @@
+;The Ultimate Grid for Productivity!
+[Groups]
+
+  NumberOfGroups = 14
+ 
+[1]
+; YouTube Video - Top Left Corner
+  TriggerTop   = [Monitor1Top]   + [Monitor1Height] / 3 
+  TriggerBottom = [Monitor1Top] + [Monitor1Height] / 3 + 200
+  TriggerLeft  = [Monitor1Left]
+  TriggerRight  = [Monitor1Left] + [Monitor1Width] / 6
+
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Top] + 574
+     GridLeft   = [Monitor1Left]
+     GridRight  = [Monitor1Left] + 668
+
+[2] 
+; Left Side Browser-Size Thin Dock
+
+  TriggerTop   = [Monitor1Top] + [Monitor1Height] / 3 + 100 
+  TriggerBottom = [Monitor1Bottom] - [Monitor1Height] / 4 
+  TriggerLeft  = [Monitor1Left]
+  TriggerRight   = [Monitor1Left] + [Monitor1Width] / 8
+
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left]
+     GridRight  = [Monitor1Right] - [Monitor1Width] * 0.75
+	 
+[3] 
+; Left Side Browser-Size Medium Thin Dock
+
+  TriggerTop   = [Monitor1Top]   + [Monitor1Height] / 4  
+  TriggerBottom = [Monitor1Bottom] - [Monitor1Height] / 4 
+  TriggerLeft  = [Monitor1Left] + [Monitor1Width] / 8
+  TriggerRight   = [Monitor1Left] + ([Monitor1Width] / 8) * 2
+
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left]
+     GridRight  = [Monitor1Right] - [Monitor1Width] * 0.6	 
+  
+[4] 
+; Left Side Browser-Size Medium Dock
+
+  TriggerTop   = [Monitor1Top]   + [Monitor1Height] / 4  
+  TriggerBottom = [Monitor1Bottom] - [Monitor1Height] / 4 
+  TriggerLeft  = [Monitor1Left] + ([Monitor1Width] / 8) * 2
+  TriggerRight   = [Monitor1Left] + ([Monitor1Width] / 8) * 3
+
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left]
+     GridRight  = [Monitor1Right] - [Monitor1Width] * 0.40
+	 
+[5] 
+; Right Side Browser-Size Dock Medium
+
+  TriggerTop   = [Monitor1Top]   + [Monitor1Height] / 4  
+  TriggerBottom = [Monitor1Bottom] - [Monitor1Height] / 4 
+  TriggerLeft  = [Monitor1Right] - ([Monitor1Width] / 8)*3
+  TriggerRight   = [Monitor1Right] - ([Monitor1Width] / 8)*2
+
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left] + [Monitor1Width] * 0.4
+     GridRight  = [Monitor1Right]	  
+	 
+[6] 
+; Right Side Browser-Size Medium Thin Dock
+
+  TriggerTop   = [Monitor1Top]   + [Monitor1Height] / 4  
+  TriggerBottom = [Monitor1Bottom] - [Monitor1Height] / 4 
+  TriggerLeft  = [Monitor1Right] - ([Monitor1Width] / 8) * 2
+  TriggerRight   = [Monitor1Right] - [Monitor1Width] / 8
+
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left] + [Monitor1Width] * 0.6
+     GridRight  = [Monitor1Right]		 
+	 
+[7] 
+; Right Side Browser-Size Thin Dock
+
+  TriggerTop   = [Monitor1Top]   + [Monitor1Height] / 4  
+  TriggerBottom = [Monitor1Bottom] - [Monitor1Height] / 4 
+  TriggerLeft  = [Monitor1Right] - [Monitor1Width] / 8
+  TriggerRight   = [Monitor1Right]
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left] + [Monitor1Width] * 0.75
+     GridRight  = [Monitor1Right]
+ 
+[8]
+; Left Side Browser-Size Wide Dock
+
+  TriggerTop   = [Monitor1Top]   + [Monitor1Height] / 4  
+  TriggerBottom = [Monitor1Bottom] - [Monitor1Height] / 4 
+  TriggerLeft  = [Monitor1Left] + ([Monitor1Width] / 8) * 3
+  TriggerRight   = [Monitor1Left] + ([Monitor1Width] / 8) * 4
+
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left]
+     GridRight  = [Monitor1Right] - [Monitor1Width] * 0.25
+
+[9] 
+; Right Side Browser-Size Wide Dock
+
+  TriggerTop   = [Monitor1Top]   + [Monitor1Height] / 4  
+  TriggerBottom = [Monitor1Bottom] - [Monitor1Height] / 4 
+  TriggerLeft  = [Monitor1Right] - ([Monitor1Width] / 8)*4
+  TriggerRight   = [Monitor1Right] - ([Monitor1Width] / 8)*3
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left] + [Monitor1Width] * 0.25
+     GridRight  = [Monitor1Right]	
+
+[10]
+; Sliding Left-Right (Expanding Window to Screen Height)
+; using Top Horizontal Strip: So cool...
+  TriggerTop   = [MonitorReal1Top]
+  ;Original Code is TriggerTop   = [MonitorReal1Top] + 30
+  ; use Monitor1Left to prevent sliding under left-docked taskbar
+  TriggerLeft  = [Monitor1Left]
+  TriggerLeft  = [MonitorReal1Left] + 30
+  TriggerBottom= [MonitorReal1Top] + 10
+  TriggerRight = [MonitorReal1Right] - 30
+  
+  GridTop   = [Monitor1Top]
+  GridLeft  = WindowWidth
+  GridBottom= [Monitor1Bottom]
+  GridRight = WindowWidth 
+
+[11]
+; Sliding Up-Down (Expanding Window to Screen Width)
+; using Left-Side Vertical Strip Top: So cool...
+  TriggerTop   = [MonitorReal1Top]
+  TriggerLeft  = [MonitorReal1Left]
+  TriggerBottom= [MonitorReal1Bottom] - 30
+  TriggerRight = [MonitorReal1Left] + 10
+  
+  GridTop   = WindowHeight
+  GridLeft  = [Monitor1Left]
+  GridBottom= WindowHeight
+  GridRight = [Monitor1Right]	 
+  
+[12]
+; Top Half of Screen Full Width
+  TriggerTop    = [Monitor1Top]
+  TriggerBottom = [Monitor1Top]  + [Monitor1Height] /10
+  TriggerLeft   = [Monitor1Left]
+  TriggerRight  = [Monitor1Left] + [Monitor1Width] / 2
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Height] / 2
+     GridLeft   = [Monitor1Left]
+     GridRight  = [Monitor1Right]
+	 
+[13]
+; Bottom Half of Screen Full Width
+  TriggerTop    = [Monitor1Top]   + [Monitor1Height] /10 * 9
+  TriggerBottom = [Monitor1Bottom]
+  TriggerLeft   = [Monitor1Left]
+  TriggerRight  = [Monitor1Left] + [Monitor1Width] / 2
+  
+     GridTop    = [Monitor1Height] / 2
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left]
+     GridRight  = [Monitor1Right]
+	 
+[14]
+; Top-Right HotSpot to Restore to last position
+  TriggerTop    = [Monitor1Top]  
+  TriggerBottom = [Monitor1Top] + [Monitor1Height] /15
+  TriggerLeft   = [Monitor1Right] - [Monitor1Width] / 25
+  TriggerRight  = [Monitor1Right]
+  
+     GridTop    = Restore
+     GridBottom = Restore
+     GridLeft   = Restore
+     GridRight  = Restore	 
+	

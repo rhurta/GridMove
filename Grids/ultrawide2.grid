@@ -1,0 +1,260 @@
+;The Ultimate Grid for Productivity!
+[Groups]
+
+  NumberOfGroups = 20
+
+[1]
+  TriggerTop   = ([Monitor1Top] + [Monitor1Height]/3) - 35
+  TriggerRight = ([Monitor1Left] + [Monitor1Width]/3) + ([Monitor1Width]/3)*1/3
+  TriggerBottom= ([Monitor1Top] + [Monitor1Height]/3)
+  TriggerLeft  = ([Monitor1Left] + [Monitor1Width]/3)
+  GridTop   = AlwaysOnTop
+  GridRight = AlwaysOnTop
+  GridBottom= AlwaysOnTop
+  GridLeft  = AlwaysOnTop
+  
+[2]
+  TriggerTop   = ([Monitor1Top] + [Monitor1Height]/3) - 35
+  TriggerRight = ([Monitor1Left] + [Monitor1Width]/3) + ([Monitor1Width]/3)*2/3
+  TriggerBottom= ([Monitor1Top] + [Monitor1Height]/3)
+  TriggerLeft  = ([Monitor1Left] + [Monitor1Width]/3) + ([Monitor1Width]/3)*1/3
+  GridTop   = Maximize
+  GridRight = Maximize
+  GridBottom= Maximize
+  GridLeft  = Maximize
+  
+[3]
+  TriggerTop   = ([Monitor1Top] + [Monitor1Height]/3) - 35
+  TriggerRight = ([Monitor1Left] + [Monitor1Width]/3) + ([Monitor1Width]/3)
+  TriggerBottom= ([Monitor1Top] + [Monitor1Height]/3)
+  TriggerLeft  = ([Monitor1Left] + [Monitor1Width]/3) + ([Monitor1Width]/3)*2/3
+  GridTop   = restore
+  GridRight = restore
+  GridBottom= restore
+  GridLeft  = restore
+
+[4]
+; Top-Right HotSpot to Restore to last position
+  TriggerTop    = [Monitor1Top]  
+  TriggerBottom = [Monitor1Top] + [Monitor1Height] /15
+  TriggerLeft   = [Monitor1Right] - [Monitor1Width] / 25
+  TriggerRight  = [Monitor1Right]
+  
+     GridTop    = Restore
+     GridBottom = Restore
+     GridLeft   = Restore
+     GridRight  = Restore	 
+
+[5] 
+; Left Side Browser-Size Thin Dock
+
+  TriggerTop   = [Monitor1Top] + [Monitor1Height] / 3    + ([Monitor1Width]/3) / 8
+  TriggerBottom = [Monitor1Bottom] -[Monitor1Height] / 3 - ([Monitor1Width]/3) / 8
+  TriggerLeft  = ([Monitor1Left] + [Monitor1Width]/3)
+  TriggerRight   = ([Monitor1Left] + [Monitor1Width]/3) + ([Monitor1Width]/3) / 8
+
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left]
+     GridRight  = [Monitor1Right] - [Monitor1Width] * 0.75
+	 
+[6] 
+; Left Side Browser-Size Medium Thin Dock
+
+  TriggerTop   = [Monitor1Top]   +[Monitor1Height] / 3   + ([Monitor1Width]/3) / 8
+  TriggerBottom = [Monitor1Bottom] -[Monitor1Height] / 3 - ([Monitor1Width]/3) / 8 
+  TriggerLeft  = ([Monitor1Left] + [Monitor1Width]/3) + ([Monitor1Width]/3) / 8
+  TriggerRight   = ([Monitor1Left] + [Monitor1Width]/3) + (([Monitor1Width]/3) / 8) * 2
+
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left]
+     GridRight  = [Monitor1Right] - [Monitor1Width] * 0.6	 
+  
+[7] 
+; Left Side Browser-Size Medium Dock
+
+  TriggerTop   = [Monitor1Top]   +[Monitor1Height] / 3   + ([Monitor1Width]/3) / 8
+  TriggerBottom = [Monitor1Bottom] -[Monitor1Height] / 3 - ([Monitor1Width]/3) / 8
+  TriggerLeft  = ([Monitor1Left] + [Monitor1Width]/3) + (([Monitor1Width]/3) / 8) * 2
+  TriggerRight   = ([Monitor1Left] + [Monitor1Width]/3) + (([Monitor1Width]/3) / 8) * 3
+
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left]
+     GridRight  = [Monitor1Right] - [Monitor1Width] * 1/2
+	 
+[8] 
+; Right Side Browser-Size Dock Medium
+
+  TriggerTop   = [Monitor1Top]   +[Monitor1Height] / 3   + ([Monitor1Width]/3) / 8
+  TriggerBottom = [Monitor1Bottom] -[Monitor1Height] / 3 - ([Monitor1Width]/3) / 8
+  TriggerLeft  = ([Monitor1Right] - [Monitor1Width]/3) - (([Monitor1Width]/3) / 8)*3
+  TriggerRight   = ([Monitor1Right] - [Monitor1Width]/3) - (([Monitor1Width]/3) / 8)*2
+
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left] + [Monitor1Width] * 1/2
+     GridRight  = [Monitor1Right]	  
+	 
+[9] 
+; Right Side Browser-Size Medium Thin Dock
+
+  TriggerTop   = [Monitor1Top]   +[Monitor1Height] / 3    + ([Monitor1Width]/3) / 8
+  TriggerBottom = [Monitor1Bottom] -[Monitor1Height] / 3  - ([Monitor1Width]/3) / 8
+  TriggerLeft  = ([Monitor1Right] - [Monitor1Width]/3) - (([Monitor1Width]/3) / 8) * 2
+  TriggerRight   = ([Monitor1Right] - [Monitor1Width]/3) - ([Monitor1Width]/3) / 8
+
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left] + [Monitor1Width] * 0.6
+     GridRight  = [Monitor1Right]		 
+	 
+[10] 
+; Right Side Browser-Size Thin Dock
+
+  TriggerTop   = [Monitor1Top]   +[Monitor1Height] / 3   + ([Monitor1Width]/3) / 8
+  TriggerBottom = [Monitor1Bottom] -[Monitor1Height] / 3 - ([Monitor1Width]/3) / 8
+  TriggerLeft  = ([Monitor1Right] - [Monitor1Width]/3) - ([Monitor1Width]/3) / 8
+  TriggerRight   = ([Monitor1Right] - [Monitor1Width]/3)
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left] + [Monitor1Width] * 0.75
+     GridRight  = [Monitor1Right]
+ 
+[11]
+; Left Side Browser-Size Wide Dock
+
+  TriggerTop   = [Monitor1Top]   +[Monitor1Height] / 3   + ([Monitor1Width]/3) / 8
+  TriggerBottom = [Monitor1Bottom] -[Monitor1Height] / 3 - ([Monitor1Width]/3) / 8
+  TriggerLeft  = ([Monitor1Left] + [Monitor1Width]/3) + (([Monitor1Width]/3) / 8) * 3
+  TriggerRight   = ([Monitor1Left] + [Monitor1Width]/3) + (([Monitor1Width]/3) / 8) * 4
+
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left]
+     GridRight  = [Monitor1Right] - [Monitor1Width] * 0.25
+
+[12] 
+; Right Side Browser-Size Wide Dock
+
+  TriggerTop   = [Monitor1Top]   +[Monitor1Height] / 3   + ([Monitor1Width]/3) / 8
+  TriggerBottom = [Monitor1Bottom] -[Monitor1Height] / 3 - ([Monitor1Width]/3) / 8
+  TriggerLeft  = ([Monitor1Right] - [Monitor1Width]/3) - (([Monitor1Width]/3) / 8)*4
+  TriggerRight   = ([Monitor1Right] - [Monitor1Width]/3) - (([Monitor1Width]/3) / 8)*3
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left] + [Monitor1Width] * 0.25
+     GridRight  = [Monitor1Right]	
+
+[13]
+; Sliding Left-Right (Expanding Window to Screen Height)
+; using Top Horizontal Strip: So cool...
+  TriggerTop   = [MonitorReal1Top]
+  ;Original Code is TriggerTop   = [MonitorReal1Top] + 30
+  ; use Monitor1Left to prevent sliding under left-docked taskbar
+  TriggerLeft  = [Monitor1Left]
+  TriggerLeft  = [MonitorReal1Left] + 30
+  TriggerBottom= [MonitorReal1Top] + 10
+  TriggerRight = [MonitorReal1Right] - 30
+  
+  GridTop   = [Monitor1Top]
+  GridLeft  = WindowWidth
+  GridBottom= [Monitor1Bottom]
+  GridRight = WindowWidth 
+
+[14]
+; Sliding Up-Down (Expanding Window to Screen Width)
+; using Left-Side Vertical Strip Top: So cool...
+  TriggerTop   = [MonitorReal1Top]
+  TriggerLeft  = [MonitorReal1Left]
+  TriggerBottom= [MonitorReal1Bottom] - 30
+  TriggerRight = [MonitorReal1Left] + 10
+  
+  GridTop   = WindowHeight
+  GridLeft  = [Monitor1Left]
+  GridBottom= WindowHeight
+  GridRight = [Monitor1Right]	 
+  
+[15]
+; Top Half of Screen Full Width
+  TriggerTop    = [Monitor1Top] + [Monitor1Height] / 3 
+  TriggerBottom = [Monitor1Top] + [Monitor1Height] / 3 + ([Monitor1Width]/3) / 8
+  TriggerLeft   = [Monitor1Left] + [Monitor1Width]/3
+  TriggerRight  = [Monitor1Left] + [Monitor1Width]/3 + ([Monitor1Width]/3) *3/8
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Height] / 2
+     GridLeft   = [Monitor1Left]
+     GridRight  = [Monitor1Right] / 2
+	 
+[16]
+; Top Half of Screen Full Width
+  TriggerTop    = [Monitor1Top] + [Monitor1Height] / 3 
+  TriggerBottom = [Monitor1Top] + [Monitor1Height] / 3 + ([Monitor1Width]/3) / 8
+  TriggerLeft   = [Monitor1Left] + [Monitor1Width]/3 + ([Monitor1Width]/3) *3/8
+  TriggerRight  = [Monitor1Left] + [Monitor1Width]/3 + ([Monitor1Width]/3) *5/8
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Height] / 2
+     GridLeft   = [Monitor1Left]
+     GridRight  = [Monitor1Right]
+
+[17]
+; Top Half of Screen Full Width
+  TriggerTop    = [Monitor1Top] + [Monitor1Height] / 3 
+  TriggerBottom = [Monitor1Top] + [Monitor1Height] / 3 + ([Monitor1Width]/3) / 8
+  TriggerLeft   = [Monitor1Left] + [Monitor1Width]/3 + ([Monitor1Width]/3) *5/8
+  TriggerRight  = [Monitor1Left] + [Monitor1Width]/3 + ([Monitor1Width]/3)
+  
+     GridTop    = [Monitor1Top]
+     GridBottom = [Monitor1Height] / 2
+     GridLeft   = [Monitor1Right] / 2
+     GridRight  = [Monitor1Right]
+	 
+[18]
+; Top Half of Screen Full Width
+  TriggerTop    = [Monitor1Top] + [Monitor1Height] * 2 / 3 - ([Monitor1Width]/3) / 8
+  TriggerBottom = [Monitor1Top] + [Monitor1Height] * 2 / 3 
+  TriggerLeft   = [Monitor1Left] + [Monitor1Width]/3
+  TriggerRight  = [Monitor1Left] + [Monitor1Width]/3 + ([Monitor1Width]/3) *3/8
+  
+     GridTop    = [Monitor1Height] / 2
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left]
+     GridRight  = [Monitor1Right] / 2
+	 
+[19]
+; Top Half of Screen Full Width
+  TriggerTop    = [Monitor1Top] + [Monitor1Height] * 2 / 3 - ([Monitor1Width]/3) / 8
+  TriggerBottom = [Monitor1Top] + [Monitor1Height] * 2 / 3 
+  TriggerLeft   = [Monitor1Left] + [Monitor1Width]/3 + ([Monitor1Width]/3) *3/8
+  TriggerRight  = [Monitor1Left] + [Monitor1Width]/3 + ([Monitor1Width]/3) *5/8
+  
+     GridTop    = [Monitor1Height] / 2
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Left]
+     GridRight  = [Monitor1Right]
+
+[20]
+; Top Half of Screen Full Width
+  TriggerTop    = [Monitor1Top] + [Monitor1Height] * 2 / 3 - ([Monitor1Width]/3) / 8
+  TriggerBottom = [Monitor1Top] + [Monitor1Height] * 2 / 3 
+  TriggerLeft   = [Monitor1Left] + [Monitor1Width]/3 + ([Monitor1Width]/3) *5/8
+  TriggerRight  = [Monitor1Left] + [Monitor1Width]/3 + ([Monitor1Width]/3)
+  
+     GridTop    = [Monitor1Height] / 2
+     GridBottom = [Monitor1Bottom]
+     GridLeft   = [Monitor1Right] / 2
+     GridRight  = [Monitor1Right] 
+
+	 
+	

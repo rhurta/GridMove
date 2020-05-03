@@ -1,5 +1,5 @@
 [Groups]
-  NumberOfGroups = 9
+  NumberOfGroups = 10
 
 [1]
   TriggerTop   = ([Monitor1Top] + [Monitor1Height]/3) - 35
@@ -90,4 +90,16 @@
   GridRight = [Monitor1Right]
   GridBottom= [Monitor1Bottom]
   GridLeft  = [Monitor1Left] + ([Monitor1Width]*9/10)
+  
+[10]
+  TriggerTop   = [MonitorReal1Top]
+  TriggerLeft  = [Monitor1Left]
+  TriggerLeft  = [MonitorReal1Left] + 30
+  TriggerBottom= [MonitorReal1Top] + 10
+  TriggerRight = [MonitorReal1Right] - 30
+  
+  GridTop   = [Monitor1Top]
+  GridLeft  = WindowWidth
+  GridBottom= [Monitor1Bottom]
+  GridRight = WindowWidth 
   
