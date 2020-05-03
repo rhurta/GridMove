@@ -330,6 +330,7 @@ startWithWindowsQ()
 ;*******************Drop Zone Mode 
 
 DropZoneMode:  
+  GoSub, VirtualDesktopGrid
   DropZoneModeFlag := true
   gosub,showgroups
   Hotkey,RButton,on
@@ -436,7 +437,6 @@ return
 ;*******************Mbutton method
 
 MButtonMove:
-  GoSub, VirtualDesktopGrid
   CoordMode,Mouse,Screen
   MouseGetPos, OldMouseX, OldMouseY, Window,
   WinGetTitle,WinTitle,ahk_id %Window%
@@ -485,6 +485,7 @@ MButtonMove:
 ;**********************edge/lbutton method
 
 MousePosition:
+  
   Settimer, MousePosition,off
 
   if MousePositionLock
